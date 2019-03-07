@@ -1,0 +1,31 @@
+{
+  "name": "fluree-cryptography",
+  "version": "1.0.0",
+  "description": "Helper cryptography functions for Fluree",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fluree/cryptography.git"
+  },
+  "keywords": [
+    "cryptography",
+    "fluree",
+    "blockchain",
+    "database"
+  ],
+  "author": "Fluree",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fluree/cryptography/issues"
+  },
+  "homepage": "https://github.com/fluree/cryptography#readme",
+  "dependencies": {
+    "bs58": "^4.0.1",
+    "elliptic": "^6.4.1",
+    "js-sha256": "^0.9.0",
+    "ripemd160": "^2.0.2"
+  }
+}
