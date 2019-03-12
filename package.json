@@ -2,14 +2,21 @@
   "name": "fluree-cryptography",
   "version": "1.0.0",
   "description": "Helper cryptography functions for Fluree",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --config jestconfig.json",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "tslint -p tsconfig.json"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fluree/cryptography.git"
   },
+  "files": [
+    "lib/**/*"
+  ],
   "keywords": [
     "cryptography",
     "fluree",
@@ -23,9 +30,25 @@
   },
   "homepage": "https://github.com/fluree/cryptography#readme",
   "dependencies": {
+    "@types/bn.js": "^4.11.4",
+    "@types/brorand": "^1.0.30",
+    "@types/bs58": "^4.0.0",
+    "@types/elliptic": "^6.4.5",
+    "@types/lodash.get": "^4.4.6",
+    "@types/ripemd160": "^2.0.0",
     "bs58": "^4.0.1",
     "elliptic": "^6.4.1",
     "js-sha256": "^0.9.0",
+    "lodash.get": "^4.4.2",
     "ripemd160": "^2.0.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.11",
+    "jest": "^24.4.0",
+    "prettier": "^1.16.4",
+    "ts-jest": "^24.0.0",
+    "tslint": "^5.13.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.3.3333"
   }
 }
