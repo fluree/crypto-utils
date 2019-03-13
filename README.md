@@ -4,7 +4,6 @@ A collection of Javascript cryptography functions for Fluree
 
 ```
 npm install fluree-cryptography 
-
 ```
 
 ## API
