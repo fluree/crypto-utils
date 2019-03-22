@@ -1,9 +1,9 @@
-import bs58 = require('bs58');
 import { ec } from 'elliptic';
 import { sha256 } from 'js-sha256';
 import get = require('lodash.get');
 import RIPEMD160 = require('ripemd160');
 import { getRFC1123DateTime, hexToBytes } from './util';
+import baseX = require('base-x');
 
 export function generateKeyPair(){
     const keyPair = new ec('secp256k1').genKeyPair();
@@ -14,6 +14,9 @@ export function generateKeyPair(){
 }
 
 export function getSinFromPublicKey(publicKey: string){
+    const BASE58 = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
+    const bs58 = baseX(BASE58)
+
     const pub = hexToBytes(publicKey);
     const pubSHA256 = Buffer.from(sha256.arrayBuffer(pub));
     const pubRIPEMD = new RIPEMD160().update(pubSHA256).digest()
