@@ -1,6 +1,6 @@
 {
   "name": "fluree-cryptography",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Helper cryptography functions for Fluree",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -37,7 +37,7 @@
     "@types/lodash.get": "^4.4.6",
     "@types/ripemd160": "^2.0.0",
     "base-x": "3.0.4",
-    "elliptic": "github:fluree/elliptic",
+    "elliptic": "^6.4.1",
     "js-sha256": "^0.9.0",
     "lodash.get": "^4.4.2",
     "ripemd160": "^2.0.2"
