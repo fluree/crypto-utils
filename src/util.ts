@@ -10,7 +10,7 @@ export function hexToBytes(hex: string) {
 
 // Format Date to RFC1123 -> Mon, 11 Mar 2019 12:23:01 GMT
 function getWeekday(idx: number){
-    const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     return weekdays[idx]
   }
   
