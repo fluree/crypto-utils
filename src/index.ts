@@ -62,8 +62,10 @@ export function signCommand(hash: string, privateKey: string){
 export function signTransaction(auth: string, db: string, expire: string | number, 
     fuel: string | number, nonce: string | number, privateKey: string, tx: string){
 
+    let dbLower = db.toLowerCase();
+
     const cmd = {
-        "type": "tx", "db": db, "tx": JSON.parse(tx), "auth": auth, "fuel": Number(fuel), 
+        "type": "tx", "db": dbLower, "tx": JSON.parse(tx), "auth": auth, "fuel": Number(fuel), 
         "nonce": Number(nonce), "expire": Number(expire) 
     }
 
@@ -78,11 +80,13 @@ export function signQuery( privateKey: string,
     param: string, queryType: string, 
     host: string, db: string ){
 
+    let dbLower = db.toLowerCase();
+
     const formattedDate = getRFC1123DateTime();
     let digest = sha256(param)
     digest = Buffer.from(digest, 'hex').toString("base64");
     
-    const uri = `/fdb/${db}/${queryType.toLowerCase()}`
+    const uri = `/fdb/${dbLower}/${queryType.toLowerCase()}`
    
     const signingString = `(request-target): post ${uri}\nhost: ${host}\nmydate: ${formattedDate}\ndigest: SHA-256=${digest}`
     const hash = sha256(signingString);
