@@ -78,7 +78,7 @@ export function signTransaction(auth: string, db: string, expire: string | numbe
 
 export function signQuery( privateKey: string, 
     param: string, queryType: string, 
-    host: string, db: string ){
+    host: string, db: string, auth: string ){
 
     let dbLower = db.toLowerCase();
 
@@ -92,7 +92,7 @@ export function signQuery( privateKey: string,
     const hash = sha256(signingString);
 
     const sig = signCommand(hash, privateKey);
-    const signature = `keyId="na",headers="(request-target) host mydate digest",algorithm="ecdsa-sha256",signature="${sig}"`
+    const signature = `keyId="${auth || "na"}",headers="(request-target) host mydate digest",algorithm="ecdsa-sha256",signature="${sig}"`
 
     const headers =  {
       "content-type": "application/json",
