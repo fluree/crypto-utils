@@ -23,6 +23,6 @@
   },
   "homepage": "https://github.com/fluree/cryptography#readme",
   "dependencies": {
-    "fluree-cryptography-base": "^0.1.2"
+    "fluree-cryptography-base": "^0.1.3"
   }
 }
