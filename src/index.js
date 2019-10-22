@@ -1,13 +1,13 @@
-const crypto = require('fluree-cryptography-base');
+var crypto = require('fluree-cryptography-base');
 
 // Format Date to RFC1123 -> Mon, 11 Mar 2019 12:23:01 GMT
 function getWeekday(idx){
-    const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
     return weekdays[idx]
   }
   
   function getMonthWord(idx){
-    const months = ["Jan", "Feb", "Mar", "Apr","May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec"];
+    var months = ["Jan", "Feb", "Mar", "Apr","May", "Jun", "Jul", "Aug", "Sep","Oct", "Nov", "Dec"];
     return months[idx]
   }
   
@@ -16,20 +16,20 @@ function getWeekday(idx){
   }
   
 function getRFC1123DateTime(){
-    const nowDate = new Date()
-    const weekday = getWeekday(nowDate.getDay());
-    const day = formatTwoDigits(nowDate.getDate());
-    const month = getMonthWord(nowDate.getMonth());
-    const year = nowDate.getUTCFullYear();  
-    const hours = formatTwoDigits(nowDate.getUTCHours());
-    const minutes = formatTwoDigits(nowDate.getUTCMinutes());
-    const seconds = formatTwoDigits(nowDate.getUTCSeconds());
+    var nowDate = new Date()
+    var weekday = getWeekday(nowDate.getDay());
+    var day = formatTwoDigits(nowDate.getDate());
+    var month = getMonthWord(nowDate.getMonth());
+    var year = nowDate.getUTCFullYear();  
+    var hours = formatTwoDigits(nowDate.getUTCHours());
+    var minutes = formatTwoDigits(nowDate.getUTCMinutes());
+    var seconds = formatTwoDigits(nowDate.getUTCSeconds());
   
-    return `${weekday}, ${day} ${month} ${year} ${hours}:${minutes}:${seconds} GMT`;
+    return weekday + ", " + day + " " + month + " " + year + " " + hours + ":" + minutes + ":" + seconds + " GMT";
 }
 
 function generateKeyPair(){
-    const keyPair = crypto.generate_key_pair();
+    var keyPair = crypto.generate_key_pair();
     return { privateKey: keyPair.private, publicKey: keyPair.public }
 }
 
@@ -43,43 +43,51 @@ function signCommand(msg, privateKey){
 
 function signTransaction(auth, db, expire, fuel, nonce, privateKey, tx){
 
-    let dbLower = db.toLowerCase();
+    var dbLower = db.toLowerCase();
 
-    const cmd = {
+    var cmd = {
         "type": "tx", "db": dbLower, "tx": JSON.parse(tx), "auth": auth, "fuel": Number(fuel), 
         "nonce": Number(nonce), "expire": Number(expire) 
     }
 
-    const stringifiedCmd = JSON.stringify(cmd);
-    const sig = signCommand(stringifiedCmd, privateKey);
+    var stringifiedCmd = JSON.stringify(cmd);
+    var sig = signCommand(stringifiedCmd, privateKey);
 
-    return { cmd: stringifiedCmd, sig }
+    return { cmd: stringifiedCmd, sig: sig }
 }
 
 function signQuery( privateKey, param, queryType, host, db, auth ){
 
-    let dbLower = db.toLowerCase();
+    var dbLower = db.toLowerCase();
 
-    const formattedDate = getRFC1123DateTime();
-    let digest = crypto.sha2_256_normalize(param, "base64");
+    var formattedDate = getRFC1123DateTime();
+    var digest = crypto.sha2_256_normalize(param, "base64");
     
-    const uri = `/fdb/${dbLower}/${queryType.toLowerCase()}`
+    var uri = "/fdb/" + dbLower + "/" + queryType.toLowerCase();
    
-    const signingString = `(request-target): post ${uri}\nhost: ${host}\nmydate: ${formattedDate}\ndigest: SHA-256=${digest}`
+    var signingString = "(request-target): post " + uri +"\nhost: " + host + "\nmydate: " +
+    formattedDate + "\ndigest: SHA-256=" + digest;
 
-    const sig = signCommand(signingString, privateKey);
-    const signature = `keyId="${auth || "na"}",headers="(request-target) host mydate digest",algorithm="ecdsa-sha256",signature="${sig}"`
+    var sig = signCommand(signingString, privateKey);
+    var authStr;
+    if(auth){
+      authStr = auth;
+    } else {
+      authStr = "na"
+    }
+    var signature = "keyId=" + authStr + ",headers=\"(request-target) host mydate digest\",algorithm=\"ecdsa-sha256\",signature="
+    + sig;
 
-    const headers =  {
+    var headers =  {
       "content-type": "application/json",
       "mydate": formattedDate,
-      "digest": `SHA-256=${digest}`,
+      "digest": "SHA-256=" + digest,
       "signature": signature
     }             
   
     return {
-      method: 'POST',
-      headers,
+      method: "POST",
+      headers: headers,
       body: param
     };
 
