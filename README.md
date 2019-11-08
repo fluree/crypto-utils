@@ -33,7 +33,7 @@ const authId = getSinFromPublicKey(publicKey);
 
 ### Sign Transaction
 
-signTransaction returns an object with the keys: header, method, body, which should then be sent to the `/command` endpoint. 
+signTransaction returns an object with the keys: sig, cmd, which should then be sent in the body of a request to the `/command` endpoint. 
 
 ```javascript
 import { generateKeyPair, getSinFromPublicKey, signTransaction } from 'fluree-cryptography';
@@ -46,11 +46,17 @@ const expire = Date.now() + 1000;
 const fuel = 100000;
 const nonce = 1;
 
-const exampleTx = [{
+const exampleTx = JSON.stringifiy([{
     "_id": "_tag",
-    "id": "tag/test" }]
+    "id": "tag/test" }])
 
-const fetchOpts = signTransaction(authId, db, expire, fuel, nonce, privateKey, exampleTx)
+const command = signTransaction(authId, db, expire, fuel, nonce, privateKey, exampleTx)
+
+const fetchOpts = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  };
 
 const fullURI = `https://localhost:8090/fdb/${db}/command`;
 
