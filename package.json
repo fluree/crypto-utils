@@ -1,6 +1,6 @@
 {
   "name": "fluree-cryptography",
-  "version": "1.6.6",
+  "version": "1.6.7",
   "description": "Helper cryptography functions for Fluree",
   "main": "src/index.js",
   "repository": {
@@ -23,6 +23,6 @@
   },
   "homepage": "https://github.com/fluree/cryptography#readme",
   "dependencies": {
-    "fluree-cryptography-base": "^0.1.4"
+    "fluree-cryptography-base": "^0.1.5"
   }
 }
