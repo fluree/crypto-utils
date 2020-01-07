@@ -41,13 +41,17 @@ function signCommand(msg, privateKey){
    return crypto.sign_message(msg, privateKey);
 }
 
-function signTransaction(auth, db, expire, fuel, nonce, privateKey, tx){
+function signTransaction(auth, db, expire, fuel, nonce, privateKey, tx, deps){
 
     var dbLower = db.toLowerCase();
 
     var cmd = {
         "type": "tx", "db": dbLower, "tx": JSON.parse(tx), "auth": auth, "fuel": Number(fuel), 
         "nonce": Number(nonce), "expire": Number(expire) 
+    }
+
+    if(deps){
+      cmd["deps"] = deps;
     }
 
     var stringifiedCmd = JSON.stringify(cmd);

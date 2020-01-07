@@ -44,13 +44,16 @@ const authId = getSinFromPublicKey(publicKey);
 const db = "test/one";
 const expire = Date.now() + 1000;
 const fuel = 100000;
-const nonce = 1;
+const nonce = 1; 
+// Deps is an optional parameter - it is a array of _tx/ids that must have succeeded
+// for the current transaction to be accepted.
+const deps = null; 
 
-const exampleTx = JSON.stringifiy([{
+const tx = JSON.stringifiy([{
     "_id": "_tag",
     "id": "tag/test" }])
 
-const command = signTransaction(authId, db, expire, fuel, nonce, privateKey, exampleTx)
+const command = signTransaction(authId, db, expire, fuel, nonce, privateKey, tx, deps)
 
 const fetchOpts = {
     method: 'POST',
