@@ -1,6 +1,6 @@
 {
-  "name": "fluree-cryptography",
-  "version": "1.6.8",
+  "name": "@fluree/crypto-utils",
+  "version": "1.6.9",
   "description": "Helper cryptography functions for Fluree",
   "main": "src/index.js",
   "repository": {

@@ -69,8 +69,9 @@ function signQuery( privateKey, param, queryType, host, db, auth ){
     
     var uri = "/fdb/" + dbLower + "/" + queryType.toLowerCase();
    
-    var signingString = "(request-target): post " + uri +"\nhost: " + host + "\nmydate: " +
-    formattedDate + "\ndigest: SHA-256=" + digest;
+    var signingString = "(request-target): post " + uri + 
+      "\nx-fluree-date: " + formattedDate + 
+      "\ndigest: SHA-256=" + digest;
 
     var sig = signCommand(signingString, privateKey);
     var authStr;
@@ -79,14 +80,16 @@ function signQuery( privateKey, param, queryType, host, db, auth ){
     } else {
       authStr = "na"
     }
-    var signature = "keyId=" + authStr + ",headers=\"(request-target) host mydate digest\",algorithm=\"ecdsa-sha256\",signature="
-    + sig;
+    var signature = 'keyId="' + authStr + '",' +
+      'headers="(request-target) x-fluree-date digest",' +
+      'algorithm="ecdsa-sha256",' + 
+      'signature="' + sig + '"';
 
     var headers =  {
-      "content-type": "application/json",
-      "mydate": formattedDate,
-      "digest": "SHA-256=" + digest,
-      "signature": signature
+      "Content-Type": "application/json",
+      "X-Fluree-Date": formattedDate,
+      "Digest": "SHA-256=" + digest,
+      "Signature": signature
     }             
   
     return {
