@@ -3,7 +3,7 @@
 A collection of Javascript cryptography functions for Fluree
 
 ```
-npm install fluree-cryptography 
+npm install @fluree/crypto-utils
 ```
 
 ## API
