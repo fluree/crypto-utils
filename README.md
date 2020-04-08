@@ -13,7 +13,7 @@ npm install @fluree/crypto-utils
 Returns a hex string of a public and private key pair. 
 
 ```javascript
-import { generateKeyPair } from 'fluree-cryptography';
+import { generateKeyPair } from '@fluree/crypto-utils';
 
 const { publicKey, privateKey }  = generateKeyPair();
 
@@ -24,7 +24,7 @@ const { publicKey, privateKey }  = generateKeyPair();
 Returns the `_auth/id` that accompanies a given public key. 
 
 ```javascript
-import { generateKeyPair, getSinFromPublicKey } from 'fluree-cryptography';
+import { generateKeyPair, getSinFromPublicKey } from '@fluree/crypto-utils';
 
 const { publicKey }  = generateKeyPair();
 const authId = getSinFromPublicKey(publicKey);
@@ -36,7 +36,7 @@ const authId = getSinFromPublicKey(publicKey);
 signTransaction returns an object with the keys: sig, cmd, which should then be sent in the body of a request to the `/command` endpoint. 
 
 ```javascript
-import { generateKeyPair, getSinFromPublicKey, signTransaction } from 'fluree-cryptography';
+import { generateKeyPair, getSinFromPublicKey, signTransaction } from '@fluree/crypto-utils';
 
 const { publicKey, privateKey }  = generateKeyPair();
 const authId = getSinFromPublicKey(publicKey);
@@ -71,7 +71,7 @@ fetch(fullURI, fetchOpts)
 signQuery returns an object with the keys: header, method, body, which should then be sent to any of the query endpoints (`/query`, `/multi-query`, `history`, `block`).
 
 ```javascript
-import { generateLeyPair, getSinFromPublicKey, signQuery } from 'fluree-cryptography';
+import { generateLeyPair, getSinFromPublicKey, signQuery } from '@fluree/crypto-utils';
 
 const { privateKey }  = generateKeyPair();
 const authId = getSinFromPublicKey(publicKey);
