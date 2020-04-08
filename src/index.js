@@ -1,4 +1,4 @@
-var crypto = require('fluree-cryptography-base');
+var crypto = require('@fluree/crypto-base');
 
 // Format Date to RFC1123 -> Mon, 11 Mar 2019 12:23:01 GMT
 function getWeekday(idx){

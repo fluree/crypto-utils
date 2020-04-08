@@ -1,5 +1,5 @@
 {
-  "name": "fluree-cryptography",
+  "name": "@fluree/crypto-utils",
   "version": "1.6.8",
   "description": "Helper cryptography functions for Fluree",
   "main": "src/index.js",
@@ -19,10 +19,10 @@
   "author": "Fluree",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/fluree/cryptography/issues"
+    "url": "https://github.com/fluree/crypto-utils/issues"
   },
-  "homepage": "https://github.com/fluree/cryptography#readme",
+  "homepage": "https://github.com/fluree/crypto-utils#readme",
   "dependencies": {
-    "fluree-cryptography-base": "^0.1.5"
+    "@fluree/crypto-base": "^0.1.5"
   }
 }
