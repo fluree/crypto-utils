@@ -6,6 +6,8 @@ A collection of Javascript cryptography functions for Fluree
 npm install @fluree/crypto-utils
 ```
 
+>This library has a dependency on the @fluree/crypto-base library, which can be downloaded via `npm install @fluree/crypto-base`
+
 ## API
 
 ### Generate Keys
@@ -73,7 +75,7 @@ signQuery returns an object with the keys: header, method, body, which should th
 ```javascript
 import { generateLeyPair, getSinFromPublicKey, signQuery } from '@fluree/crypto-utils';
 
-const { privateKey }  = generateKeyPair();
+const { publicKey, privateKey }  = generateKeyPair();
 const authId = getSinFromPublicKey(publicKey);
 
 const param = JSON.stringify({select: ["*"], from: "_collection"});
@@ -89,4 +91,27 @@ const fullURI = `https://localhost:8090/fdb/${db}/query`;
 fetch(fullURI, fetchOpts)
 ```
 
+
+### Sign Request
+
+signRequest returns an object containing the keys: header, method and body. This object can be used to sign requests that are not related to transactions or queries.
+
+```javascript
+
+import { generateLeyPair, getSinFromPublicKey, signRequest } from '@fluree/crypto-utils';
+
+const { publicKey, privateKey }  = generateKeyPair();
+const authId = getSinFromPublicKey(publicKey);
+
+var endpoint = 'http://localhost:8090/fdb/delete-db';
+
+var body = JSON.stringify({
+  "db/id": 'test/deleteme',
+  "auth": authId
+});
+
+var fetchOpts = signRequest("POST", endpoint, body, privateKey, authId);
+
+fetch(endpoint, fetchOpts)
+```
 
