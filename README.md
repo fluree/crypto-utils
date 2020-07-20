@@ -73,7 +73,7 @@ fetch(fullURI, fetchOpts)
 signQuery returns an object with the keys: header, method, body, which should then be sent to any of the query endpoints (`/query`, `/multi-query`, `history`, `block`).
 
 ```javascript
-import { generateLeyPair, getSinFromPublicKey, signQuery } from '@fluree/crypto-utils';
+import { generateKeyPair, getSinFromPublicKey, signQuery } from '@fluree/crypto-utils';
 
 const { publicKey, privateKey }  = generateKeyPair();
 const authId = getSinFromPublicKey(publicKey);
@@ -98,7 +98,7 @@ signRequest returns an object containing the keys: header, method and body. This
 
 ```javascript
 
-import { generateLeyPair, getSinFromPublicKey, signRequest } from '@fluree/crypto-utils';
+import { generateKeyPair, getSinFromPublicKey, signRequest } from '@fluree/crypto-utils';
 
 const { publicKey, privateKey }  = generateKeyPair();
 const authId = getSinFromPublicKey(publicKey);
