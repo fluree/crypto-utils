@@ -60,8 +60,20 @@ function signTransaction(auth, db, expire, fuel, nonce, privateKey, tx, deps){
     var dbLower = db.toLowerCase();
 
     var cmd = {
-        "type": "tx", "db": dbLower, "tx": JSON.parse(tx), "auth": auth, "fuel": Number(fuel), 
-        "nonce": Number(nonce), "expire": Number(expire) 
+        "type": "tx", 
+        "db": dbLower, 
+        "tx": JSON.parse(tx), 
+        "auth": auth
+    }
+    
+    if (fuel && Number(fuel)>0){
+      cmd.fuel = Number(fuel);
+    }
+    if (nonce && Number(nonce)>0){
+      cmd.nonce = Number(nonce);
+    }
+    if (expire && Number(expire)>0){
+      cmd.expire = Number(expire);
     }
 
     if(deps){
