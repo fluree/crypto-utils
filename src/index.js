@@ -1,4 +1,12 @@
 var crypto = require('@fluree/crypto-base');
+let njsCrypto;
+try {
+  njsCrypto = require('crypto');
+  console.log('using Node.js crypto module');
+} catch (err) {
+  console.log('using @fluree/crypto-base');
+  process.exit(1); 
+}
 
 // Format Date to RFC1123 -> Mon, 11 Mar 2019 12:23:01 GMT
 function getWeekday(idx){
@@ -43,7 +51,17 @@ function parseURL(str){
 }
 
 function generateKeyPair(){
-    var keyPair = crypto.generate_key_pair();
+
+    let keyPair
+    if (njsCrypto) {
+      const ecdh = njsCrypto.createECDH('secp256k1');
+      ecdh.generateKeys();
+      keyPair = { private: ecdh.getPrivateKey('hex'), 
+                  public:  ecdh.getPublicKey('hex','compressed')};
+    }
+    else {
+      keyPair = crypto.generate_key_pair();
+    }
     return { privateKey: keyPair.private, publicKey: keyPair.public }
 }
 

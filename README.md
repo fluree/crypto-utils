@@ -14,11 +14,23 @@ npm install @fluree/crypto-utils
 
 Returns a hex string of a public and private key pair. 
 
+#### JavaScript version
 ```javascript
 import { generateKeyPair } from '@fluree/crypto-utils';
 
 const { publicKey, privateKey }  = generateKeyPair();
+```
 
+#### Node.js version
+For Node.js, you will need to reference the Node.js crypto module.
+This is because the randomness for Node.js seed generation is 
+determined differently than the browser.
+
+```javascript
+const crypto = require("crypto");
+const {generateKeyPair,getSinFromPublicKey} = require('@fluree/crypto-utils');
+
+const { publicKey, privateKey }  = generateKeyPair();
 ```
 
 ### Get Auth ID from Public Key
