@@ -8,6 +8,9 @@ npm install @fluree/crypto-utils
 
 >This library has a dependency on the @fluree/crypto-base library, which can be downloaded via `npm install @fluree/crypto-base`
 
+## Breaking change between version 1.8 & 1.9
+The `host` parameter has been dropped from the signQuery function since it is no longer used to create the signing string.
+
 ## API
 
 ### Generate Keys
@@ -92,11 +95,10 @@ const authId = getSinFromPublicKey(publicKey);
 
 const param = JSON.stringify({select: ["*"], from: "_collection"});
 const db = "test/one";
-const host = "localhost";
 const queryType = "query";
 
 
-const fetchOpts = signQuery(privateKey, param, queryType, host, db)
+const fetchOpts = signQuery(privateKey, param, queryType, db)
 
 const fullURI = `https://localhost:8090/fdb/${db}/query`;
 
