@@ -73,6 +73,19 @@ function signCommand(msg, privateKey){
    return crypto.sign_message(msg, privateKey);
 }
 
+/**
+ * signTransaction returns an object that can be used to sign a transaction
+ * targeted for the `command` endpoint.
+ *
+ * @param {string} auth - auth used to submit the request
+ * @param {string} db - the complete name of the ledger (e.g., test/one)
+ * @param {number} expire - the time in seconds before a pending transaction should not be executed. Can be null.
+ * @param {number} fuel - the maximum amount of allowable fuel when executing a transaction. Can be null.
+ * @param {number} nonce - any long/64-bit integer value that will make this transaction unique. Can be null.
+ * @param {string} privateKey - private key used to create the signed request
+ * @param {string} tx - JSON stringified query
+ * @param {array}  deps - an array of _tx/ids that must have succeeded for the current transaction to be accepted.
+ */
 function signTransaction(auth, db, expire, fuel, nonce, privateKey, tx, deps){
 
     var dbLower = db.toLowerCase();
@@ -104,7 +117,17 @@ function signTransaction(auth, db, expire, fuel, nonce, privateKey, tx, deps){
     return { cmd: stringifiedCmd, sig: sig }
 }
 
-function signQuery( privateKey, param, queryType, host, db, auth ){
+/**
+ * signQuery returns an object that can be used to sign a query.
+ * The POST method is assumed to generate the signing string.
+ *
+ * @param {string} privateKey - private key used to create the signed request
+ * @param {string} param - JSON stringified query
+ * @param {string} queryType - identifies the target endpoint (e.g., query)
+ * @param {string} db - the complete name of the ledger (e.g., test/one)
+ * @param {string} auth - auth used to submit the request
+ */
+function signQuery( privateKey, param, queryType, db, auth ){
 
     var dbLower = db.toLowerCase();
 
@@ -144,13 +167,23 @@ function signQuery( privateKey, param, queryType, host, db, auth ){
 
 }
 
+/**
+ * signRequest returns an object that can be used to sign a request 
+ * not related to queries or commands targeted for the command endpoint.
+ *
+ * @param {string} method - e.g., GET, POST or PUT
+ * @param {string} url - full URL (e.g., http://localhost:8090/fdb/delete-db)
+ * @param {string} body - JSON stringified transaction or command
+ * @param {string} privateKey - private key used to create the signed request
+ * @param {string} auth - auth used to submit the request
+ */
 function signRequest( method, url, body, privateKey, auth ){
 
   var uriParts = parseURL(url);
   var formattedDate = getRFC1123DateTime();
   var digest = crypto.sha2_256_normalize(body, "base64");
   
-  var signingString = "(request-target): post " + uriParts[4] + 
+  var signingString = "(request-target): post /" + uriParts[4] + 
     "\nx-fluree-date: " + formattedDate + 
     "\ndigest: SHA-256=" + digest;
 
