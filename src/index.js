@@ -150,7 +150,7 @@ function signRequest( method, url, body, privateKey, auth ){
   var formattedDate = getRFC1123DateTime();
   var digest = crypto.sha2_256_normalize(body, "base64");
   
-  var signingString = "(request-target): post " + uriParts[4] + 
+  var signingString = "(request-target): post /" + uriParts[4] + 
     "\nx-fluree-date: " + formattedDate + 
     "\ndigest: SHA-256=" + digest;
 
