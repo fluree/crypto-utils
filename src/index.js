@@ -74,8 +74,8 @@ function signCommand(msg, privateKey){
 }
 
 /**
- * signQuery returns an object that can be used to sign a query.
- * The POST method is assumed to generate the signing string.
+ * signTransaction returns an object that can be used to sign a transaction
+ * targeted for the `command` endpoint.
  *
  * @param {string} auth - auth used to submit the request
  * @param {string} db - the complete name of the ledger (e.g., test/one)
