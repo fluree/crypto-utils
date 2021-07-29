@@ -80,7 +80,7 @@ function signCommand(msg, privateKey){
  * @param {string} auth - auth used to submit the request
  * @param {string} db - the complete name of the ledger (e.g., test/one)
  * @param {number} expire - the time in seconds before a pending transaction should not be executed. Can be null.
- * @param {numner} fuel - the maximum amount of allowable fuel when executing a transaction. Can be null.
+ * @param {number} fuel - the maximum amount of allowable fuel when executing a transaction. Can be null.
  * @param {number} nonce - any long/64-bit integer value that will make this transaction unique. Can be null.
  * @param {string} privateKey - private key used to create the signed request
  * @param {string} tx - JSON stringified query
