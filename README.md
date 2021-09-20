@@ -70,12 +70,17 @@ const tx = JSON.stringifiy([{
     "_id": "_tag",
     "id": "tag/test" }])
 
-const command = signTransaction(authId, db, expire, fuel, nonce, privateKey, tx, deps)
+let command = signTransaction(authId, db, expire, fuel, nonce, privateKey, tx, deps)
+
+// If you want to receive the verbose results from the transaction, 
+// set the txid-only property to false.  By default (true), only the
+// transaction id will be returned.
+Object.assign(command, {"txid-only": false});
 
 const fetchOpts = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body)
+    body: JSON.stringify(command)
   };
 
 const fullURI = `https://localhost:8090/fdb/${db}/command`;
@@ -131,39 +136,4 @@ var body = JSON.stringify({
 var fetchOpts = signRequest("POST", endpoint, body, privateKey, authId);
 
 fetch(endpoint, fetchOpts)
-```
-
-#### Example: Transact (Closed-API)
-The following example demonstrates how to submit a transaction, with a valid permissioned auth, that requests the ledger/network to 'sign' the actual transaction since a private key should not be passed in clear-text.  This may be useful in a closed-api environment when the entire output from the transact operation (e.g., temp-ids) is required.
-
-```javascript
-import { signRequest } from '@fluree/crypto-utils';
-
-const auth = "insert your auth here";
-const private = "insert your private key here";
-
-const db = 'test/one'; 
-
-// The host portion of the URL is required as the signRequest 
-// function parses the entire url to build the signing string.
-const endpoint = this.state.dbserverUrl + `/fdb/${db}/transact`;
-
-// substitute your transaction here
-var body = JSON.stringify([{"_id":"_user","username":"newUser"}]);
-
-var options = signRequest("POST", endpoint, body, private, auth);
-
-// Adding a header to set timeout option for transact.
-// This is the amount a time that the request will be monitored
-// for a response from the ledger server(s) before returning a  
-// "408" timeout message. The default timeout period is currently
-// 5 minutes.  
-let rqstOpts = {
-  method: options.method,
-  headers: Object.assign({}, options.headers, {"Request-Timeout": 600000}),
-  body: options.body
-};
-
-fetch(endpoint, rqstOpts)
-:
 ```
