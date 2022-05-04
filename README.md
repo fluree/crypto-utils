@@ -58,7 +58,7 @@ import { generateKeyPair, getSinFromPublicKey, signTransaction } from '@fluree/c
 const { publicKey, privateKey }  = generateKeyPair();
 const authId = getSinFromPublicKey(publicKey);
 
-const db = "test/one";
+const ledger = "test/one";
 const expire = Date.now() + 1000;
 const fuel = 100000;
 const nonce = 1; 
@@ -70,7 +70,7 @@ const tx = JSON.stringifiy([{
     "_id": "_tag",
     "id": "tag/test" }])
 
-let command = signTransaction(authId, db, expire, fuel, nonce, privateKey, tx, deps)
+let command = signTransaction(authId, ledger, expire, fuel, nonce, privateKey, tx, deps)
 
 // If you want to receive the verbose results from the transaction, 
 // set the txid-only property to false.  By default (true), only the
@@ -83,7 +83,7 @@ const fetchOpts = {
     body: JSON.stringify(command)
   };
 
-const fullURI = `https://localhost:8090/fdb/${db}/command`;
+const fullURI = `https://localhost:8090/fdb/${ledger}/command`;
 
 fetch(fullURI, fetchOpts)
 ```
@@ -99,17 +99,16 @@ const { publicKey, privateKey }  = generateKeyPair();
 const authId = getSinFromPublicKey(publicKey);
 
 const param = JSON.stringify({select: ["*"], from: "_collection"});
-const db = "test/one";
+const ledger = "test/one";
 const queryType = "query";
 
 
-const fetchOpts = signQuery(privateKey, param, queryType, db)
+const fetchOpts = signQuery(privateKey, param, queryType, ledger)
 
-const fullURI = `https://localhost:8090/fdb/${db}/query`;
+const fullURI = `https://localhost:8090/fdb/${ledger}/query`;
 
 fetch(fullURI, fetchOpts)
 ```
-
 
 ### Sign Request
 
@@ -129,7 +128,7 @@ const authId = getSinFromPublicKey(publicKey);
 var endpoint = 'http://localhost:8090/fdb/delete-db';
 
 var body = JSON.stringify({
-  "db/id": 'test/deleteme',
+  "ledger/id": 'test/deleteme',
   "auth": authId
 });
 
