@@ -2,11 +2,19 @@
 
 A collection of Javascript cryptography functions for Fluree
 
+NOTE: This library has been deprecated. We recommend using the
+flureedb / flureenjs libraries directly instead. If there is something in here
+that you'd like to see in those libraries, please let us know by opening a
+GitHub issue here: [https://github.com/fluree/db/issues](https://github.com/fluree/db/issues).
+
+## Installation
 ```
 npm install @fluree/crypto-utils
 ```
 
->This library has a dependency on the @fluree/crypto-base library, which can be downloaded via `npm install @fluree/crypto-base`
+## Breaking change between version 1.9 & 1.10
+The `db` parameter has been changed to `ledger` as it should have been named in
+the first place. This requires Fluree Ledger version 1.0.1 or higher.
 
 ## Breaking change between version 1.8 & 1.9
 The `host` parameter has been dropped from the signQuery function since it is no longer used to create the signing string.
