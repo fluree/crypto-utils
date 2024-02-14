@@ -23,6 +23,6 @@
   },
   "homepage": "https://github.com/fluree/crypto-utils#readme",
   "dependencies": {
-    "@fluree/crypto-base": "^0.1.6"
+    "@fluree/crypto-base": "^0.1.7"
   }
 }
